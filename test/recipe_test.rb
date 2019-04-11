@@ -6,9 +6,10 @@ require './lib/recipe'
 class RecipeTest < MiniTest::Test
 
   def setup
-    @ingredient_1 = Ingredient.new(name: "Flour", unit: "Cup", calories: 450, amount_needed: 0, on_hand: 0)
-    @ingredient_2 = Ingredient.new(name: "Sugar", unit: "Cup", calories: 770, amount_needed: 0, on_hand: 0)
-    @ingredient_3 = Ingredient.new(name: "Egg", unit: "Each", calories: 80, amount_needed: 0, on_hand: 0)
+    @ingredient_1 = Ingredient.new("Flour", "Cup", 450)
+    @ingredient_2 = Ingredient.new("Sugar", "Cup", 770)
+    @ingredient_3 = Ingredient.new("Egg", "Each", 80)
+    
     @recipe = Recipe.new("Chocolate Cake")
   end
 
@@ -29,9 +30,9 @@ class RecipeTest < MiniTest::Test
     @recipe.add_ingredient(@ingredient_2, 3)
     @recipe.add_ingredient(@ingredient_3, 4)
 
-    expected = {"Flour"  => @ingredient_1,
-                "Sugar"  => @ingredient_2,
-                "Egg" => @ingredient_3}
+    expected = {@ingredient_1 => 3,
+                @ingredient_2 => 3,
+                @ingredient_3 => 4}
 
     assert_equal expected, @recipe.ingredients
   end
@@ -50,11 +51,4 @@ class RecipeTest < MiniTest::Test
     assert_equal 3980, @recipe.total_calories
   end
 
-
 end
-
-
-# Use TDD to build a `Recipe` class that responds to the following:
-
-# * The recipe should be able to check the quantity needed of a given ingredient to make that recipe.
-# * The recipe should be able to find the total number of calories in that dish.

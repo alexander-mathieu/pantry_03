@@ -7,18 +7,17 @@ class Recipe
     @ingredients = {}
   end
 
-  def add_ingredient(ingredient, amount)
-    ingredient.amount_needed      = amount
-    @ingredients[ingredient.name] = ingredient
+  def add_ingredient(ingredient, quantity)
+    @ingredients[ingredient] = quantity
   end
 
   def quantity_needed(ingredient)
-    @ingredients[ingredient.name].amount_needed
+    @ingredients[ingredient]
   end
 
   def total_calories
-    @ingredients.values.sum do |ingredient|
-      ingredient.calories * ingredient.amount_needed
+    @ingredients.each.sum do |ingredient, quantity|
+      ingredient.calories * quantity
     end
   end
 

@@ -2,34 +2,31 @@ class Pantry
   attr_reader :stock
 
   def initialize
-    @stock = {}
+    @stock = Hash.new(0)
   end
 
   def stock_check(ingredient)
-    if @stock.keys.include?(ingredient.name)
-      @stock[ingredient.name].on_hand
+    if @stock.keys.include?(ingredient)
+      @stock[ingredient]
     else
       0
     end
   end
 
   def restock(ingredient, amount)
-    @stock[ingredient.name] = ingredient
-    if @stock[ingredient.name].on_hand == 0
-      ingredient.on_hand = amount
-    else
-      ingredient.on_hand += amount
-    end
-    @stock[ingredient.name].on_hand
+    @stock[ingredient] += amount
   end
 
   def enough_ingredients_for?(recipe)
-    # on_hand = @stock.values.each do |value|
-    #   value.on_hand
-    # end
-    # recipe_needs = recipe.ingredients.each do |ingredient|
-    #   recipe.quantity_needed(ingredient)
-    # end
+    recipe.ingredients.each do |ingredient, quantity_needed|
+      if !@stock.keys.include?(ingredient)
+        return false
+      elsif @stock[ingredient] < quantity_needed
+        return false
+      else
+        true
+      end
+    end
   end
 
 end

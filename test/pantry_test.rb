@@ -7,11 +7,13 @@ require './lib/pantry'
 class PantryTest < MiniTest::Test
 
   def setup
-    @cheese = Ingredient.new(name: "Cheese", unit: "C", calories: 50, on_hand: 0)
-    @mac = Ingredient.new(name: "Macaroni", unit: "oz", calories: 200, on_hand: 0)
+    @cheese = Ingredient.new("Cheese", "Cup", 50)
+    @mac = Ingredient.new("Macaroni", "Oz", 200)
+
     @mac_and_cheese = Recipe.new("Mac and Cheese")
     @mac_and_cheese.add_ingredient(@cheese, 2)
     @mac_and_cheese.add_ingredient(@mac, 8)
+    
     @pantry = Pantry.new
   end
 
